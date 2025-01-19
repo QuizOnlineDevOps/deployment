@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quizfrontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: quizfrontend
+  template:
+    metadata:
+      labels:
+        app: quizfrontend
+    spec:
+      containers:
+      - name: quizfrontend
+        image: jjikky3/kuisfe:latest  # Gunakan nama image yang sesuai
+        imagePullPolicy: "Always"
+        ports:
+        - containerPort: 3050
+        resources:
+          requests:
+            cpu: 400m
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: quizfrontend-service
+spec:
+  selector:
+    app: quizfrontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: NodePort

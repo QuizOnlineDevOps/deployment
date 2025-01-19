@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quizbackend
+spec:
+  replicas : 2
+  selector:
+    matchLabels:
+      app: quizbackend
+  template:
+    metadata:
+      labels:
+        app: quizbackend
+    spec:
+      containers:
+      - name: quizbackend
+        image: jjikky3/quiz-online-backend:master  # Gunakan nama image yang sesuai
+        imagePullPolicy: "Always"
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            cpu: 400m
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: quizbackend-service
+spec:
+  selector:
+    app: quizbackend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: NodePort
