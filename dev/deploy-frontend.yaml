@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: quizfrontend
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: quizfrontend
